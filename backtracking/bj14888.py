@@ -5,7 +5,6 @@ add, sub, mul, div = map(int, input().split())  # (+,-.*,/) 개수
 maxAns = -1e9
 minAns = 1e9
 
-
 def sol(idx, num, add, sub, mul, div):
     global maxAns, minAns
 
@@ -25,7 +24,6 @@ def sol(idx, num, add, sub, mul, div):
             sol(idx+1, -((-num)//numArr[idx]), add, sub, mul, div-1)
         else:
             sol(idx+1, num//numArr[idx], add, sub, mul, div-1)
-
 
 sol(1, numArr[0], add, sub, mul, div)
 print(maxAns)
