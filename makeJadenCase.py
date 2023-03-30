@@ -21,6 +21,7 @@ print(solution(s))
 
 # split(" ")으로 수정
 # s[i][0] -> s[i][:1]로 수정
+# [:1]일 때는 s[i]가 비워있어도 가능! but, [0]은 비워있으면 안됨!!
 
 
 def solution2(s):
