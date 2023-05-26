@@ -1,8 +1,18 @@
 // 신고 결과 받기
 
+/*
+처음 생각했던 방법
+: id_list를 키 값으로 있는 객체를 생성하여 신고받은 횟수, 메일 받은 횟수 저장 -> 반복문이 많아짐
+(시간초과)
+
+->
+? solution1: id_list의 이름 순서를 활용하여 신고받은 횟수 저장, 메일 받을 횟수(결과값) 구하기
+*/
+
 function solution(id_list, report, k) {
   let complaint_num = new Array(id_list.length).fill(0);
   let result = new Array(id_list.length).fill(0);
+  // ? set을 이용한 배열 요소의 중복 제거
   let dupReport = [...new Set(report)];
 
   //유저가 신고받은 횟수
@@ -21,20 +31,42 @@ function solution(id_list, report, k) {
   return result;
 }
 
-const id_list = ["muzi", "frodo", "apeach", "neo"];
-const report = [
-  "muzi frodo",
-  "apeach frodo",
-  "frodo neo",
-  "muzi neo",
-  "apeach muzi",
-];
-const k = 2;
+console.log(
+  solution(
+    ["muzi", "frodo", "apeach", "neo"],
+    ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"],
+    2
+  )
+);
 
-console.log(solution(id_list, report, k));
+// solution2: Map을 활용한 풀이
+// ? new Map() : 키(key)-값(value) 쌍인 요소를 가진 반복 가능 객체 생성
+// ? key를 사용해서 value를 set, get 할 수 있음
 
-// 시간초과
-// set을 이용한 중복 제거로 반복문 줄이기
-// 처음 생각했던 방법
-// : id_list를 키 값으로 있는 객체를 생성하여 신고받은 횟수, 메일 받은 횟수 저장 -> 반복문이 많아짐
-// solution1: 객체를 이용하지 않고, id_list의 index순서를 활용하여 신고받은 횟수 저장, 메일 받을 횟수(결과값) 구하기
+function solution2(id_list, report, k) {
+  let reports = [...new Set(report)].map((e) => {
+    return e.split(" "); //report 원소를 ['muzi','frodo']의 형태로 변환하여 저장
+  });
+
+  let counts = new Map();
+
+  for (const bad of reports) {
+    counts.set(bad[1], counts.get(bad[1]) + 1 || 1); // ? 둘다 true일 때 앞의 값을 반환
+  }
+
+  let success = new Map();
+  for (const report of reports) {
+    if (counts.get(report[1]) >= k) {
+      success.set(report[0], success.get(report[0]) + 1 || 1);
+    }
+  }
+  return id_list.map((id) => success.get(id) || 0);
+}
+
+console.log(
+  solution2(
+    ["muzi", "frodo", "apeach", "neo"],
+    ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"],
+    2
+  )
+);
