@@ -1,7 +1,8 @@
 function dfs(graph, v, visited) {
-  visited[v] = true;
+  visited[v] = true; // ? 탐색 식작 노드 방문 처리
   console.log(v);
 
+  // ? 탐색 노드의 인접 노드 확인
   for (let cur of graph[v]) {
     if (!visited[cur]) {
       dfs(graph, cur, visited);
