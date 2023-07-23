@@ -1,5 +1,7 @@
+// stack 이용
+
 function dfs(graph, v, visited) {
-  visited[v] = true; // ? 탐색 식작 노드 방문 처리
+  visited[v] = true; // ? 탐색 시작 노드 방문 처리
   console.log(v);
 
   // ? 탐색 노드의 인접 노드 확인
